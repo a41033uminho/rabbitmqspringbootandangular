@@ -13,7 +13,9 @@ public class MachineConsumer {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @RabbitListener(queues = MachineAMQPConfig.QUEUE)
+    // Listening Queues and do somenthing when messages appear
     public void consumer(Message message) {
+    	// Send Message to Websocker Broker
         simpMessagingTemplate.convertAndSend(MachineWebSocketConfiguration.BROKER,
                 new String(message.getBody()));
     }

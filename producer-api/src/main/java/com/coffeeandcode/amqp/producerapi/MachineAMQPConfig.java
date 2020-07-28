@@ -11,6 +11,7 @@ public class MachineAMQPConfig {
     public static String EXCHANGE_NAME = "Machines";
 
     @Bean
+    // create an Exchange
     public Exchange declareExchange() {
         return ExchangeBuilder.directExchange(EXCHANGE_NAME)
                 .durable(true)

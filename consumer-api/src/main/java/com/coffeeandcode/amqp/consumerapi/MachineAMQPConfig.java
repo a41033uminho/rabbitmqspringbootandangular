@@ -12,6 +12,7 @@ public class MachineAMQPConfig {
     public static final String ROUTING_KEY = "";
 
     @Bean
+    //  create exchange if not exists
     public Exchange declareExchange() {
         return ExchangeBuilder.directExchange(EXCHANGE_NAME)
                 .durable(true)
@@ -19,12 +20,14 @@ public class MachineAMQPConfig {
     }
 
     @Bean
+    // create a Queue to Bind exchange
     public Queue declareQueue() {
         return QueueBuilder.durable(QUEUE)
                 .build();
     }
 
     @Bean
+    // Create a Binding to link Exchange to Queue - Note that Exchange is Direct ( without filtering messages)
     public Binding declareBinding(Exchange exchange, Queue queue) {
         return BindingBuilder.bind(queue)
                 .to(exchange)

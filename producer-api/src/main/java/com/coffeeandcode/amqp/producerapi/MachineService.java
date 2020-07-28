@@ -18,12 +18,14 @@ public class MachineService {
 
 
     public Machine save(Machine machine) {
+    	// Save machine in memory Repository
         Machine machineSaved = machineRepository.save(machine);
+        // Send Machine to RabbitMQ Exchange
         sendMachineToRabbit(machineSaved);
         return machineSaved;
     }
 
-    public void sendMachineToRabbit(Machine machine) {
+    private void sendMachineToRabbit(Machine machine) {
         try {
             String json = new ObjectMapper().writeValueAsString(machine);
             rabbitTemplate.convertAndSend(MachineAMQPConfig.EXCHANGE_NAME, "", json);
